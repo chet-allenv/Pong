@@ -1,0 +1,40 @@
+[gd_scene load_steps=5 format=3 uid="uid://cvt5sjgaybirx"]
+
+[ext_resource type="Texture2D" uid="uid://cd3jqjnpk2a45" path="res://resources/map.png" id="1_8d7ew"]
+[ext_resource type="Script" path="res://scripts/Player.cs" id="2_csl6l"]
+[ext_resource type="Texture2D" uid="uid://b8bq2jabp378o" path="res://resources/paddle.png" id="3_jc1fo"]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1yt0p"]
+size = Vector2(2225, 203)
+
+[node name="GameScene" type="Node2D"]
+
+[node name="Map" type="Sprite2D" parent="."]
+texture = ExtResource("1_8d7ew")
+
+[node name="GameCamera" type="Camera2D" parent="."]
+
+[node name="Player" type="CharacterBody2D" parent="."]
+position = Vector2(-925, 0)
+script = ExtResource("2_csl6l")
+
+[node name="PlayerPaddleSprite" type="Sprite2D" parent="Player"]
+texture = ExtResource("3_jc1fo")
+
+[node name="PlayerPaddleCollisionBox" type="CollisionShape2D" parent="Player"]
+
+[node name="BottomWall" type="RigidBody2D" parent="."]
+position = Vector2(-943, 532)
+freeze = true
+
+[node name="BottomWallCollisionBox" type="CollisionShape2D" parent="BottomWall"]
+position = Vector2(958, 110)
+shape = SubResource("RectangleShape2D_1yt0p")
+
+[node name="TopWall" type="RigidBody2D" parent="."]
+position = Vector2(-954, -754)
+freeze = true
+
+[node name="TopWallCollisionBox" type="CollisionShape2D" parent="TopWall"]
+position = Vector2(958, 110)
+shape = SubResource("RectangleShape2D_1yt0p")
