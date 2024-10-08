@@ -1,20 +1,40 @@
 using Godot;
 using System;
 
-public partial class Ball : RigidBody2D
+public partial class Ball : CharacterBody2D
 {
-	// Called when the node enters the scene tree for the first time.
+	[Export] public float Speed = 300f; 
+	private Vector2 direction;
+
 	public override void _Ready()
 	{
+		RandomizeDirection();
 		InitializePosition();
 	}
 
-	// Called every frame. 'delta' is the elapsed time since the previous frame.
-	public override void _Process(double delta)
+	public override void _PhysicsProcess(double delta)
 	{
+		Velocity = direction * Speed;
+		
+		KinematicCollision2D collision = MoveAndCollide(Velocity * (float)delta);
+
+		if (collision != null)
+		{
+			direction = direction.Bounce(collision.GetNormal());
+
+			direction = direction.Normalized();
+
+			Speed *= 1.01f;
+		}
 	}
 
-	public void InitializePosition()
+	private void RandomizeDirection()
+	{
+		float angle = (float)GD.RandRange(0, Mathf.Tau);
+		direction = new Vector2(Mathf.Cos(angle), Mathf.Sin(angle));
+	}
+
+	private void InitializePosition()
 	{
 		Position = new Vector2(0, 0);
 	}

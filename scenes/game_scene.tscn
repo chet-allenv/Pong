@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://cvt5sjgaybirx"]
+[gd_scene load_steps=10 format=3 uid="uid://cvt5sjgaybirx"]
 
 [ext_resource type="Texture2D" uid="uid://cd3jqjnpk2a45" path="res://resources/map.png" id="1_8d7ew"]
 [ext_resource type="Script" path="res://scripts/Player.cs" id="2_csl6l"]
@@ -6,11 +6,17 @@
 [ext_resource type="Texture2D" uid="uid://e3te221d4prm" path="res://resources/ball.png" id="4_0i546"]
 [ext_resource type="Script" path="res://scripts/Ball.cs" id="4_v24w6"]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_1yt0p"]
-size = Vector2(2225, 203)
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_bat7f"]
+size = Vector2(53, 260)
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_0etcs"]
 radius = 36.3456
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_1yt0p"]
+size = Vector2(2225, 203)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_v648k"]
+size = Vector2(274, 1356)
 
 [node name="GameScene" type="Node2D"]
 
@@ -27,25 +33,11 @@ script = ExtResource("2_csl6l")
 texture = ExtResource("3_jc1fo")
 
 [node name="PlayerPaddleCollisionBox" type="CollisionShape2D" parent="Player"]
+position = Vector2(-0.5, -1)
+shape = SubResource("RectangleShape2D_bat7f")
 
-[node name="BottomWall" type="RigidBody2D" parent="."]
-position = Vector2(-943, 532)
-freeze = true
-
-[node name="BottomWallCollisionBox" type="CollisionShape2D" parent="BottomWall"]
-position = Vector2(958, 110)
-shape = SubResource("RectangleShape2D_1yt0p")
-
-[node name="TopWall" type="RigidBody2D" parent="."]
-position = Vector2(-954, -754)
-freeze = true
-
-[node name="TopWallCollisionBox" type="CollisionShape2D" parent="TopWall"]
-position = Vector2(958, 110)
-shape = SubResource("RectangleShape2D_1yt0p")
-
-[node name="Ball" type="RigidBody2D" parent="."]
-position = Vector2(-2074, 569)
+[node name="Ball" type="CharacterBody2D" parent="."]
+position = Vector2(-1525, 391)
 script = ExtResource("4_v24w6")
 
 [node name="BallSprite" type="Sprite2D" parent="Ball"]
@@ -53,3 +45,22 @@ texture = ExtResource("4_0i546")
 
 [node name="BallCollisionBox" type="CollisionShape2D" parent="Ball"]
 shape = SubResource("CircleShape2D_0etcs")
+
+[node name="BottomWall" type="StaticBody2D" parent="."]
+position = Vector2(0, 640)
+
+[node name="BottomWallCollisionBox" type="CollisionShape2D" parent="BottomWall"]
+shape = SubResource("RectangleShape2D_1yt0p")
+
+[node name="TopWall" type="StaticBody2D" parent="."]
+position = Vector2(0, -640)
+
+[node name="TopWallCollisionBox" type="CollisionShape2D" parent="TopWall"]
+shape = SubResource("RectangleShape2D_1yt0p")
+
+[node name="StaticBody2D" type="StaticBody2D" parent="."]
+position = Vector2(1000, 0)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
+position = Vector2(2, -1)
+shape = SubResource("RectangleShape2D_v648k")
