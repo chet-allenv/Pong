@@ -38,4 +38,9 @@ public partial class Ball : CharacterBody2D
 	{
 		Position = new Vector2(0, 0);
 	}
+
+	public void _on_player_goal_body_entered(Node body)
+	{
+		InitializePosition();
+	}
 }

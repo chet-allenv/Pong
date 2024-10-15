@@ -1,10 +1,12 @@
-[gd_scene load_steps=10 format=3 uid="uid://cvt5sjgaybirx"]
+[gd_scene load_steps=13 format=3 uid="uid://cvt5sjgaybirx"]
 
 [ext_resource type="Texture2D" uid="uid://cd3jqjnpk2a45" path="res://resources/map.png" id="1_8d7ew"]
 [ext_resource type="Script" path="res://scripts/Player.cs" id="2_csl6l"]
 [ext_resource type="Texture2D" uid="uid://b8bq2jabp378o" path="res://resources/paddle.png" id="3_jc1fo"]
 [ext_resource type="Texture2D" uid="uid://e3te221d4prm" path="res://resources/ball.png" id="4_0i546"]
 [ext_resource type="Script" path="res://scripts/Ball.cs" id="4_v24w6"]
+[ext_resource type="Script" path="res://scripts/Scoreboard.cs" id="6_dn5cf"]
+[ext_resource type="Texture2D" uid="uid://d33vj5jtrodh7" path="res://resources/zero.png" id="7_e2ucc"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_bat7f"]
 size = Vector2(53, 260)
@@ -13,14 +15,18 @@ size = Vector2(53, 260)
 radius = 36.3456
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_1yt0p"]
-size = Vector2(2225, 203)
+size = Vector2(2080.45, 203)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_v648k"]
 size = Vector2(274, 1356)
 
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_h8gi7"]
+size = Vector2(236.5, 3145)
+
 [node name="GameScene" type="Node2D"]
 
 [node name="Map" type="Sprite2D" parent="."]
+z_index = -2
 texture = ExtResource("1_8d7ew")
 
 [node name="GameCamera" type="Camera2D" parent="."]
@@ -50,12 +56,14 @@ shape = SubResource("CircleShape2D_0etcs")
 position = Vector2(0, 640)
 
 [node name="BottomWallCollisionBox" type="CollisionShape2D" parent="BottomWall"]
+position = Vector2(36.0469, 0)
 shape = SubResource("RectangleShape2D_1yt0p")
 
 [node name="TopWall" type="StaticBody2D" parent="."]
 position = Vector2(0, -640)
 
 [node name="TopWallCollisionBox" type="CollisionShape2D" parent="TopWall"]
+position = Vector2(36.2266, 0)
 shape = SubResource("RectangleShape2D_1yt0p")
 
 [node name="StaticBody2D" type="StaticBody2D" parent="."]
@@ -64,3 +72,26 @@ position = Vector2(1000, 0)
 [node name="CollisionShape2D" type="CollisionShape2D" parent="StaticBody2D"]
 position = Vector2(2, -1)
 shape = SubResource("RectangleShape2D_v648k")
+
+[node name="Scoreboard" type="Node2D" parent="."]
+script = ExtResource("6_dn5cf")
+
+[node name="PlayerScore" type="Sprite2D" parent="Scoreboard"]
+z_index = -1
+position = Vector2(-182, -394)
+texture = ExtResource("7_e2ucc")
+
+[node name="OpponentScore" type="Sprite2D" parent="Scoreboard"]
+z_index = -1
+position = Vector2(199, -387)
+texture = ExtResource("7_e2ucc")
+
+[node name="PlayerGoal" type="Area2D" parent="."]
+position = Vector2(-1063, -1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PlayerGoal"]
+position = Vector2(-67, -34)
+shape = SubResource("RectangleShape2D_h8gi7")
+
+[connection signal="body_entered" from="PlayerGoal" to="Ball" method="_on_player_goal_body_entered"]
+[connection signal="body_entered" from="PlayerGoal" to="Scoreboard" method="_on_player_goal_body_entered"]

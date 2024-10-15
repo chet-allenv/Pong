@@ -43,6 +43,13 @@ public partial class Player : CharacterBody2D
 			velocity.Y = Mathf.MoveToward(0, velocity.Y, Speed);
 		}
 
+		if (!(Input.IsActionPressed("ui_up") || Input.IsActionPressed("ui_down")))
+		{
+			velocity = Vector2.Zero;
+		}
+
+
+
 		Velocity = velocity;
 		MoveAndSlide();
 	}
